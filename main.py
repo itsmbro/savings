@@ -2,8 +2,8 @@ import streamlit as st
 from revolut import Revolut
 
 # Configurazione dell'API Revolut (DA CONFIGURARE)
-REVOLUT_PHONE = "+39XXXXXXXXXX"  # Inserisci il tuo numero di telefono
-REVOLUT_PIN = "1234"  # Inserisci il PIN (usa un metodo più sicuro!)
+REVOLUT_PHONE = "+393486067862"  # Inserisci il tuo numero di telefono
+REVOLUT_PIN = "210198"  # Inserisci il PIN (usa un metodo più sicuro!)
 
 def get_revolut_balance():
     try:
