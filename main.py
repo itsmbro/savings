@@ -105,7 +105,7 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Input utente
-if user_input := st.chat_input("Parlami della tua situazione finanziaria..."):
+if user_input := st.chat_input("Sono il tuo coach finanziario💰... "):
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
         st.markdown(user_input)
@@ -142,10 +142,11 @@ def mostra_grafico_torta(obiettivo, saldo):
     st.plotly_chart(fig)
 
 # Mostra la dashboard con obiettivo, saldo e versamento consigliato
-st.title("Dashboard Finanziaria")
-st.subheader(f"Obiettivo Economico: {financial_data['obiettivo']} €")
-st.subheader(f"Saldo Attuale: {financial_data['saldo']} €")
+st.title("📊Dashboard Finanziaria📊")
+st.subheader(f"🎯Obiettivo Economico: {financial_data['obiettivo']} €")
+st.subheader(f"💰Saldo Attuale: {financial_data['saldo']} €")
 st.subheader(f"Versamento mensile consigliato: {financial_data['versamento_mensile']} €")
+st.subheader(f"📅Scadenza: {financial_data['scadenza']}"
 
 # Mostra il grafico a torta
 mostra_grafico_torta(financial_data['obiettivo'], financial_data['saldo'])
