@@ -145,7 +145,7 @@ def mostra_grafico_torta(obiettivo, saldo):
 st.title("📊Dashboard Finanziaria📊")
 st.subheader(f"🎯Obiettivo Economico: {financial_data['obiettivo']} €")
 st.subheader(f"💰Saldo Attuale: {financial_data['saldo']} €")
-st.subheader(f"Versamento mensile consigliato: {financial_data['versamento_mensile']} €")
+st.subheader(f"Versamento mensile: {financial_data['versamento_mensile']} €")
 st.subheader(f"📅Scadenza: {financial_data['scadenza']}"
 
 # Mostra il grafico a torta
