@@ -74,8 +74,8 @@ def generate_initial_prompt(financial_data):
         "00000000\n"
         f"{json.dumps(financial_data, ensure_ascii=False, indent=4)}\n"
         "00000000\n\n"
-        "Puoi aggiornare il JSON solo se necessario, senza aggiungere nuove informazioni inutili. Quando vuoi aggiornare il file JSON, devi farlo seguendo il formato ESATTO come te l'ho riportato io (nota gli zeri).\n"
-        f"Inizia a darmi consigli su come raggiungere il mio obiettivo con della semplice matematica di base. Se devi fare conti con le date, considera che oggi è {oggi}. "
+        "Puoi aggiornare il JSON quando necessario, senza aggiungere nuove informazioni inutili. Quando vuoi aggiornare il file JSON, devi farlo seguendo il formato ESATTO come te l'ho riportato io (nota gli zeri).\n"
+        f"ogni volta che ti dico di aggiornare qualcosa, come ad esempio l'obiettivo, il saldo, o la scadenza, usa la semplice matematica di base per ricalcolare tutto. Se devi fare conti con le date, considera che oggi è {oggi}. "
     )
 
 # Funzione per aggiornare financial_data.json dalle risposte di ChatGPT
