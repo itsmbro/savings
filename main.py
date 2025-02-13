@@ -63,7 +63,7 @@ def save_financial_data(financial_data):
 # Genera il prompt iniziale con il contesto
 def generate_initial_prompt(financial_data):
     return (
-        "Sei un consulente finanziario. Aiutami a gestire il mio obiettivo economico.\n"
+        "Sei il mio consulente finanziario. Aiutami a gestire il mio obiettivo economico.\n"
         "Il mio obiettivo economico è quello di risparmiare una certa somma di denaro entro una data di scadenza.\n"
         "Gestiamo un file JSON in Python che contiene le mie informazioni finanziarie.\n"
         "Il JSON attuale con le informazioni finanziarie è il seguente:\n\n"
@@ -71,7 +71,7 @@ def generate_initial_prompt(financial_data):
         f"{json.dumps(financial_data, ensure_ascii=False, indent=4)}\n"
         "00000000\n\n"
         "Puoi aggiornare il JSON solo se necessario, senza aggiungere nuove informazioni inutili.\n"
-        "Inizia a darmi consigli su come raggiungere il mio obiettivo."
+        "Inizia a darmi consigli su come raggiungere il mio obiettivo con della semplice matematica di base."
     )
 
 # Funzione per aggiornare financial_data.json dalle risposte di ChatGPT
