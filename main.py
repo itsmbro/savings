@@ -146,7 +146,7 @@ st.title("📊Dashboard Finanziaria📊")
 st.subheader(f"🎯Obiettivo Economico: {financial_data['obiettivo']} €")
 st.subheader(f"💰Saldo Attuale: {financial_data['saldo']} €")
 st.subheader(f"Versamento mensile: {financial_data['versamento_mensile']} €")
-st.subheader(f"📅Scadenza: {financial_data['scadenza']}"
+st.subheader(f"📅Scadenza: {financial_data['scadenza']}")
 
 # Mostra il grafico a torta
 mostra_grafico_torta(financial_data['obiettivo'], financial_data['saldo'])
