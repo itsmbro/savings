@@ -1,2 +1,3 @@
 streamlit
-revolut
+openai
+requests
