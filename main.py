@@ -8,9 +8,7 @@ import datetime
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import re
-import datetime
 
-oggi = datetime.date.today()
 # Configurazione delle API
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
@@ -67,6 +65,7 @@ def save_financial_data(financial_data):
 
 # Genera il prompt iniziale con il contesto
 def generate_initial_prompt(financial_data):
+    oggi = datetime.date.today()
     return (
         "Sei il mio consulente finanziario. Aiutami a gestire il mio obiettivo economico.\n"
         "Il mio obiettivo economico è quello di risparmiare una certa somma di denaro entro una data di scadenza.\n"
@@ -75,8 +74,8 @@ def generate_initial_prompt(financial_data):
         "00000000\n"
         f"{json.dumps(financial_data, ensure_ascii=False, indent=4)}\n"
         "00000000\n\n"
-        "Puoi aggiornare il JSON solo se necessario, senza aggiungere nuove informazioni inutili.Quando vuoi aggiornare il file JSON, devi farlo seguendo il formato ESATTO come te l'ho riportato io (nota gli zeri).\n"
-        f"Inizia a darmi consigli su come raggiungere il mio obiettivo con della semplice matematica di base. se devi fare conti con le date, considera che oggi è {oggi} "
+        "Puoi aggiornare il JSON solo se necessario, senza aggiungere nuove informazioni inutili. Quando vuoi aggiornare il file JSON, devi farlo seguendo il formato ESATTO come te l'ho riportato io (nota gli zeri).\n"
+        f"Inizia a darmi consigli su come raggiungere il mio obiettivo con della semplice matematica di base. Se devi fare conti con le date, considera che oggi è {oggi}. "
     )
 
 # Funzione per aggiornare financial_data.json dalle risposte di ChatGPT
@@ -133,15 +132,6 @@ if user_input := st.chat_input("Parlami della tua situazione finanziaria..."):
     except Exception as e:
         st.error(f"Errore nella comunicazione con OpenAI: {str(e)}")
 
-# Calcolo dei versamenti mensili per raggiungere l'obiettivo
-def calcola_versamento_mensile(obiettivo, saldo, scadenza):
-    oggi = datetime.date.today()
-    data_scadenza = datetime.datetime.strptime(scadenza, "%Y-%m-%d").date()
-    mesi_rimanenti = (data_scadenza.year - oggi.year) * 12 + data_scadenza.month - oggi.month
-    saldo_rimanente = obiettivo - saldo
-    versamento_mensile = saldo_rimanente / mesi_rimanenti
-    return versamento_mensile
-
 # Grafico a torta per mostrare quanto manca per raggiungere l'obiettivo
 def mostra_grafico_torta(obiettivo, saldo):
     progresso = saldo / obiettivo * 100
@@ -155,8 +145,6 @@ def mostra_grafico_torta(obiettivo, saldo):
 st.title("Dashboard Finanziaria")
 st.subheader(f"Obiettivo Economico: {financial_data['obiettivo']} €")
 st.subheader(f"Saldo Attuale: {financial_data['saldo']} €")
-versamento_consigliato = calcola_versamento_mensile(financial_data['obiettivo'], financial_data['saldo'], financial_data['scadenza'])
-st.subheader(f"Versamento Mensile Consigliato: {versamento_consigliato:.2f} €")
 
 # Mostra il grafico a torta
 mostra_grafico_torta(financial_data['obiettivo'], financial_data['saldo'])
