@@ -8,7 +8,9 @@ import datetime
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import re
+import datetime
 
+oggi = datetime.date.today()
 # Configurazione delle API
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
@@ -29,7 +31,7 @@ def load_financial_data():
         # JSON iniziale con le variabili finanziarie
         financial_data = {
             "obiettivo": 10000,
-            "scadenza": "2035-09-01",
+            "scadenza": "2025-09-01",
             "saldo": 600,
             "versamento_mensile": 0
         }
@@ -74,7 +76,7 @@ def generate_initial_prompt(financial_data):
         f"{json.dumps(financial_data, ensure_ascii=False, indent=4)}\n"
         "00000000\n\n"
         "Puoi aggiornare il JSON solo se necessario, senza aggiungere nuove informazioni inutili.\n"
-        "Inizia a darmi consigli su come raggiungere il mio obiettivo con della semplice matematica di base."
+        f"Inizia a darmi consigli su come raggiungere il mio obiettivo con della semplice matematica di base. se devi fare conti con le date, considera che oggi è {oggi} "
     )
 
 # Funzione per aggiornare financial_data.json dalle risposte di ChatGPT
