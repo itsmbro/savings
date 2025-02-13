@@ -5,6 +5,8 @@ import os
 import base64
 import requests
 import datetime
+import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
 # Configurazione delle API
 openai.api_key = st.secrets["OPENAI_API_KEY"]
@@ -137,9 +139,21 @@ def calcola_versamento_mensile(obiettivo, saldo, scadenza):
     versamento_mensile = saldo_rimanente / mesi_rimanenti
     return versamento_mensile
 
+# Grafico a torta per mostrare quanto manca per raggiungere l'obiettivo
+def mostra_grafico_torta(obiettivo, saldo):
+    progresso = saldo / obiettivo * 100
+    restante = 100 - progresso
+
+    fig = go.Figure(data=[go.Pie(labels=["Raggiunto", "Mancante"], values=[progresso, restante], hole=0.3)])
+    fig.update_layout(title="Progresso Versamento Obiettivo")
+    st.plotly_chart(fig)
+
 # Mostra la dashboard con obiettivo, saldo e versamento consigliato
 st.title("Dashboard Finanziaria")
 st.subheader(f"Obiettivo Economico: {financial_data['obiettivo']} €")
 st.subheader(f"Saldo Attuale: {financial_data['saldo']} €")
 versamento_consigliato = calcola_versamento_mensile(financial_data['obiettivo'], financial_data['saldo'], financial_data['scadenza'])
 st.subheader(f"Versamento Mensile Consigliato: {versamento_consigliato:.2f} €")
+
+# Mostra il grafico a torta
+mostra_grafico_torta(financial_data['obiettivo'], financial_data['saldo'])
