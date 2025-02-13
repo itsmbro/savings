@@ -7,6 +7,7 @@ import requests
 import datetime
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
+import re
 
 # Configurazione delle API
 openai.api_key = st.secrets["OPENAI_API_KEY"]
