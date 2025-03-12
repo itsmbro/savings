@@ -1,5 +1,1 @@
 streamlit
-openai==0.28
-requests
-plotly
-matplotlib
