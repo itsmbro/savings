@@ -1,9 +1,12 @@
 import streamlit as st
 import random
+from gtts import gTTS
+import os
 
 # Liste di parole
 prima_lista = [
-    "Dio", "Gesù", "Creatore", "Signore"]
+    "Dio", "Gesù", "Creatore", "Signore"
+]
 
 seconda_lista = [
     "Cane puzzolente", "Gatto che miagola e muore di fame", "Porco", 
@@ -39,3 +42,11 @@ if st.button("Genera Frase"):
     parola2 = random.choice(seconda_lista)
     frase = f"{parola1} {parola2}"
     st.success(f"✨ {frase} ✨")
+
+    # Genera l'audio con gTTS
+    tts = gTTS(frase, lang='it')
+    tts.save("frase.mp3")
+    st.audio("frase.mp3", format='audio/mp3')
+
+    # Rimuove il file audio dopo la riproduzione
+    os.remove("frase.mp3")
