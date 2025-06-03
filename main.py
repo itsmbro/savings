@@ -32,6 +32,8 @@ def send_command(action):
 st.set_page_config(page_title="Motor Control", layout="centered")
 st.title("📟 ISM2 Remote Control")
 
+st.title("📟 ISM2 Remote Control")
+
 if st.button("⬆️ AVANTI"):
     send_command("forward")
     st.success("Comando AVANTI inviato")
@@ -39,3 +41,7 @@ if st.button("⬆️ AVANTI"):
 if st.button("⬇️ INDIETRO"):
     send_command("backward")
     st.success("Comando INDIETRO inviato")
+
+if st.button("🏠 HOMING"):
+    send_command("homing")
+    st.success("Comando HOMING inviato")
