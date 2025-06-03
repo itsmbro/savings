@@ -10,7 +10,7 @@ PORT = 8883
 USERNAME = "eutron"
 PASSWORD = "Mmlklklk12"
 ASSET_ID = "EUTRON"
-COMMAND_PATH = "commands"
+COMMAND_PATH = "measures"
 
 def send_command(action):
     topic = f"{USERNAME}/{ASSET_ID}/{COMMAND_PATH}"
