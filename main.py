@@ -1,63 +1,41 @@
 import streamlit as st
-import random
+import paho.mqtt.client as mqtt
+import ssl
+import json
 import time
 
-st.set_page_config(page_title="Scoreggiometro 3000 💨", layout="centered")
+# --- Config MQTT ---
+BROKER_URL = "mqtt.servitly-sandbox.com"
+PORT = 8883
+USERNAME = "eutron"
+PASSWORD = "Mmlklklk12"
+ASSET_ID = "EUTRON"
+COMMAND_PATH = "commands"
 
-st.title("💨 Scoreggiometro 3000")
-st.write("Misura l'intensità della puzza... **scientificamente**! 😷🔬")
+def send_command(action):
+    topic = f"{USERNAME}/{ASSET_ID}/{COMMAND_PATH}"
+    payload = {
+        "ts": int(time.time() * 1000),
+        "command": action
+    }
 
-# 🔬 Introduzione scientifica fake
-st.markdown("""
-Benvenuto nel *Laboratorio Avanzato di Flatulenze Applicate™*.<br>
-Qui, la tua scoreggia viene sottoposta ad analisi molecolare, quantistica e... olfattiva. 💨
-""", unsafe_allow_html=True)
+    client = mqtt.Client(client_id=f"{USERNAME}_WEB")
+    client.username_pw_set(USERNAME, PASSWORD)
+    client.tls_set(certfile=None, keyfile=None, cert_reqs=ssl.CERT_NONE, tls_version=ssl.PROTOCOL_TLSv1_2)
+    client.connect(BROKER_URL, PORT)
+    client.loop_start()
+    client.publish(topic, json.dumps(payload))
+    client.loop_stop()
+    client.disconnect()
 
-# 🧪 Analisi attivata
-if st.button("Analizza la scoreggia 💨"):
-    
-    with st.spinner("📡 Rilevamento particelle di metano in corso..."):
-        time.sleep(3)
-    
-    with st.spinner("🔬 Analisi del coefficiente di devastazione ambientale..."):
-        time.sleep(3)
-    
-    with st.spinner("🧠 Consulto con l'Intelligenza Artificiale dell'odore..."):
-        time.sleep(3)
-    
-    # 💩 Risultato finale
-    score = random.randint(0, 100)
-    st.write(f"**Intensità della puzza rilevata:** `{score}/100` 💨")
+# --- Streamlit UI ---
+st.set_page_config(page_title="Motor Control", layout="centered")
+st.title("📟 ISM2 Remote Control")
 
-    # Commento scientifico serio-non-serio
-    if score < 30:
-        st.success("🧼 Classe: *Puzza Leggera™* – Effluvio sopportabile, potrebbe essere stato il gatto.")
-    elif score < 70:
-        st.warning("🧀 Classe: *Media Tossicità™* – Si consiglia l'apertura di finestre e preghiere silenziose.")
-    else:
-        st.error("☠️ Classe: *Nube Letale™* – Zona contaminata. Attivare piano di evacuazione d'emergenza.")
+if st.button("⬆️ AVANTI"):
+    send_command("forward")
+    st.success("Comando AVANTI inviato")
 
-    # Barra dell’intensità
-    st.progress(score)
-
-    # Emoji bonus
-    st.write("**Livello visivo della puzza:**")
-    if score < 30:
-        st.write("😌 – Lieve come una brezza primaverile.")
-    elif score < 70:
-        st.write("🤢 – L'effetto gorgonzola è in agguato.")
-    else:
-        st.write("💀 – Hai aperto un portale infernale.")
-
-    # Titolo onorifico
-    st.write("**Titolo conferito:**")
-    if score < 30:
-        st.balloons()
-        st.write("🏅 *Aspirante Profumino* – Onorevole menzione per discrezione.")
-    elif score < 70:
-        st.write("🎖️ *Dottor Flatulenza* – Per risultati mediamente devastanti.")
-    else:
-        st.write("👑 *Signore delle Scoregge* – Il tuo regno puzza e tu sei il re.")
-
-else:
-    st.write("Premi il bottone per iniziare l'analisi... se hai coraggio 😏")
+if st.button("⬇️ INDIETRO"):
+    send_command("backward")
+    st.success("Comando INDIETRO inviato")
