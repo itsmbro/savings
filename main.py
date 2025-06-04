@@ -12,11 +12,12 @@ PASSWORD = "Mmlklklk12"
 ASSET_ID = "EUTRON"
 COMMAND_PATH = "measures"
 
-def send_command(action):
+def send_command(action, value = None):
     topic = f"{USERNAME}/{ASSET_ID}/{COMMAND_PATH}"
     payload = {
         "ts": int(time.time() * 1000),
-        "command": action
+        "command": action, 
+        "value": value
     }
 
     client = mqtt.Client(client_id=f"{USERNAME}_WEB")
