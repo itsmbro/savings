@@ -52,3 +52,11 @@ if st.button("Start Loop"):
 if st.button("Stop Loop"):
     send_command("stop")
     st.success("Comando HOMING inviato")
+
+# 🔥 Invio temperatura
+st.subheader("🧪 Imposta Temperatura")
+temp_value = st.number_input("Inserisci la temperatura", min_value=0, max_value=300, step=1)
+
+if st.button("Invia Temperatura"):
+    send_command("set_temperature", value=int(temp_value))
+    st.success(f"Temperatura {int(temp_value)}°C inviata")
