@@ -29,6 +29,23 @@ def send_command(action, value = None):
     client.loop_stop()
     client.disconnect()
 
+def invia_sequenza_comandi():
+    send_command("forward")
+    st.info("Comando AVANTI inviato")
+    time.sleep(2)
+
+    send_command("homing")
+    st.info("Comando HOMING inviato")
+    time.sleep(10)
+
+    send_command("loop")
+    st.info("Comando LOOP iniziato")
+    time.sleep(10)
+
+    send_command("stop")
+    st.info("Comando LOOP interrotto")
+
+
 # --- Streamlit UI ---
 st.set_page_config(page_title="Motor Control", layout="centered")
 st.title("📟 ISM2 Remote Control")
@@ -53,6 +70,10 @@ if st.button("Start Loop"):
 if st.button("Stop Loop"):
     send_command("stop")
     st.success("Comando HOMING inviato")
+
+if st.button("▶️ Avvia Sequenza"):
+    invia_sequenza_comandi()
+    st.success("Sequenza completata")
 
 # 🔥 Invio temperatura
 st.subheader("🧪 Imposta Temperatura")
