@@ -29,21 +29,7 @@ def send_command(action, value = None):
     client.loop_stop()
     client.disconnect()
 
-def invia_sequenza_comandi():
-    send_command("forward")
-    st.info("Comando AVANTI inviato")
-    time.sleep(2)
 
-    send_command("homing")
-    st.info("Comando HOMING inviato")
-    time.sleep(10)
-
-    send_command("loop")
-    st.info("Comando LOOP iniziato")
-    time.sleep(10)
-
-    send_command("stop")
-    st.info("Comando LOOP interrotto")
 
 
 # --- Streamlit UI ---
@@ -71,9 +57,7 @@ if st.button("Stop Loop"):
     send_command("stop")
     st.success("Comando HOMING inviato")
 
-if st.button("▶️ Avvia Sequenza"):
-    invia_sequenza_comandi()
-    st.success("Sequenza completata")
+
 
 # 🔥 Invio temperatura
 st.subheader("🧪 Imposta Temperatura")
@@ -82,3 +66,39 @@ temp_value = st.number_input("Inserisci la temperatura", min_value=0, max_value=
 if st.button("Invia Temperatura"):
     send_command("set_temperature", value=int(temp_value))
     st.success(f"Temperatura {int(temp_value)}°C inviata")
+
+# 🔁 Sequenza di comandi personalizzata
+st.subheader("▶️ Sequenza Automatica")
+
+wait_forward = st.number_input("⏱️ Pausa dopo AVANTI (secondi)", min_value=0, max_value=60, value=2)
+wait_homing = st.number_input("⏱️ Pausa dopo HOMING (secondi)", min_value=0, max_value=60, value=10)
+wait_loop   = st.number_input("⏱️ Pausa dopo START LOOP (secondi)", min_value=0, max_value=60, value=10)
+
+log_box = st.empty()
+
+def invia_sequenza_comandi_dinamica():
+    log = []
+
+    send_command("forward")
+    log.append("🚀 AVANTI inviato")
+    log_box.info("\n".join(log))
+    time.sleep(wait_forward)
+
+    send_command("homing")
+    log.append("🏠 HOMING inviato")
+    log_box.info("\n".join(log))
+    time.sleep(wait_homing)
+
+    send_command("loop")
+    log.append("🔁 START LOOP inviato")
+    log_box.info("\n".join(log))
+    time.sleep(wait_loop)
+
+    send_command("stop")
+    log.append("⏹️ STOP LOOP inviato")
+    log_box.info("\n".join(log))
+
+    st.success("✅ Sequenza completata con successo")
+
+if st.button("▶️ Avvia Sequenza Personalizzata"):
+    invia_sequenza_comandi_dinamica()
